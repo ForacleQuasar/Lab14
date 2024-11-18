@@ -14,7 +14,7 @@ double* full_elements(double* array, int size) {
 	}
 	return array;
 }
-double put_elements(double* array, int size) {
+void put_elements(double* array, int size) {
 	int i = 0;
 	while (i < size) {
 		printf("array[%i]=%lf\n", i + 1, array[i]);
@@ -24,7 +24,14 @@ double put_elements(double* array, int size) {
 double* calc_elements(double* array, int size) {
 	int i = 0;
 	while (i < size) {
-		printf("Изменённый array[%i]=%lf\n", i + 1, array[i] * -1);
+		array[i] = array[i] * -1;
+		i += 1;
+	}
+}
+void put_elements_changed(double* array, int size) {
+	int i = 0;
+	while (i < size) {
+		printf("array[%i]=%lf\n", i + 1, array[i]);
 		i += 1;
 	}
 }
@@ -52,16 +59,16 @@ int find_element(double* array, int size, double element) {
 //3
 int number_element(double* array, int size, int k) {
 	for (int i = 0; i < size; i++) {
-		if ((int)array[i] % k == 0)printf("Порядковый номер элемента кратного %i > %i\n", k, i + 1);
+		if ((int)array[i] % k == 0)
+			printf("Кратный %i элемент массива [%i] = %i\n", k, i + 1, (int)array[i]);
 	}
-
 }
 //ИЗ
 double max_element(double* array, int size, int K, int L) {
 	int i = L - K;
 	int i1 = K-1;
-	double maximum = -10;
-	while (i > 0) {
+	double maximum = array[K-1];
+	while (i >= 0) {
 		if (array[i1] > maximum) {
 			maximum = array[i1];
 			i--;
@@ -84,8 +91,11 @@ void main() {
 	full_elements(array, size);
 	put_elements(array, size);
 	calc_elements(array, size);
+	put_elements_changed(array, size);
 	//2
-	int begin = 0;
+	int begin;
+	printf("Введите индекс начала суммы >");
+	scanf("%i", &begin);
 	int end = size;
 	double element;
 	printf("Сумма элементов массива с %i до %i > %lf\n",begin, end, sum_elements(array, begin, end));
